@@ -19,12 +19,27 @@ function showQuestion(){
     let questionsNo = currentQuesIndex = 1;
     questionElement.innerHTML = questionsNo + ". " + currentQuestion.question;
 
-    currentQuestion.answers.forEach(answer=> {
+    let currentAnsIndex = currentQuestion.correctIndex;
+    currentQuestion.answers.forEach((answer, index)=> {
         const button = document.createElement("button");
         button.innerHTML = answer;
         button.classList.add("btn");
         answerButtons.appendChild(button); 
+        if(currentAnsIndex == index){
+            button.dataset.correctIndex = true;
+        }
+        button.addEventListener("click", selectAns);    
     });
+}
+
+function selectAns(e){
+    const selectBtn = e.target;
+    const isCorrectIndex = selectBtn.dataset.correctIndex === 'true';
+    if(isCorrectIndex){
+        selectBtn.classList.add("correct");
+    }else{
+        selectBtn.classList.add("incorrect");
+    }
 }
 
 function resetState(){
